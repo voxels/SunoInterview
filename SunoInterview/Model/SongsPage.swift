@@ -41,6 +41,7 @@ public struct Clip: Codable, Sendable, Equatable, Hashable {
     public let title:String
     public let handle:String
     public let image_large_url:String
+    public let audio_url: String?
     public let is_liked:Bool
     public let upvote_count:Int
 
@@ -48,12 +49,14 @@ public struct Clip: Codable, Sendable, Equatable, Hashable {
                 title: String,
                 handle: String,
                 image_large_url: String,
+                audio_url: String? = nil,
                 is_liked: Bool,
                 upvote_count: Int) {
         self.id = id
         self.title = title
         self.handle = handle
         self.image_large_url = image_large_url
+        self.audio_url = audio_url
         self.is_liked = is_liked
         self.upvote_count = upvote_count
     }
@@ -64,6 +67,7 @@ public struct Clip: Codable, Sendable, Equatable, Hashable {
         try container.encode(self.title, forKey: .title)
         try container.encode(self.handle, forKey: .handle)
         try container.encode(self.image_large_url, forKey: .image_large_url)
+        try container.encodeIfPresent(self.audio_url, forKey: .audio_url)
         try container.encode(self.is_liked, forKey: .is_liked)
         try container.encode(self.upvote_count, forKey: .upvote_count)
     }
@@ -73,6 +77,7 @@ public struct Clip: Codable, Sendable, Equatable, Hashable {
         case title
         case handle
         case image_large_url
+        case audio_url
         case is_liked
         case upvote_count
     }
@@ -83,6 +88,7 @@ public struct Clip: Codable, Sendable, Equatable, Hashable {
         self.title = try container.decode(String.self, forKey: .title)
         self.handle = try container.decode(String.self, forKey: .handle)
         self.image_large_url = try container.decode(String.self, forKey: .image_large_url)
+        self.audio_url = try container.decodeIfPresent(String.self, forKey: .audio_url)
         self.is_liked = try container.decode(Bool.self, forKey: .is_liked)
         self.upvote_count = try container.decode(Int.self, forKey: .upvote_count)
     }
@@ -93,5 +99,14 @@ public struct Clip: Codable, Sendable, Equatable, Hashable {
 
     public func hash(into hasher: inout Hasher) {
         return hasher.combine(id)
+    }
+    
+    public var imageURL: URL? {
+        return URL(string: image_large_url)
+    }
+    
+    public var audioURL: URL? {
+        guard let audio_url else { return nil }
+        return URL(string: audio_url)
     }
 }
