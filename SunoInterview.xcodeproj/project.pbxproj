@@ -32,8 +32,8 @@
 		1E79FDF92EAA8B3800410915 = {
 			isa = PBXGroup;
 			children = (
-				1E79FE042EAA8B3800410915 /* SunoInterview */,
 				1E79FE032EAA8B3800410915 /* Products */,
+				1E79FE042EAA8B3800410915 /* SunoInterview */,
 			);
 			sourceTree = "<group>";
 		};

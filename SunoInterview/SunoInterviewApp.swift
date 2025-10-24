@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct SunoInterviewApp: App {
+    @State private var networkClient:ContentNetworkClient = ContentNetworkClient()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(networkClient)
         }
     }
 }
